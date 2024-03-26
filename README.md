@@ -1,8 +1,10 @@
 <h1>pos</h1>
 
+
+
 ![3](https://github.com/nickyoung3300/pos/assets/95325064/25b2f089-0ccb-459a-9394-5716b24e8be1)
 
-使用者進入畫面 商品 透過 Django 的 Model 對應 postgreSQL 的資料庫 取出資料 商品資料
+使用者進入POS系統畫面 商品品選單 的商品 會透過 Django 中 Model 對應 postgreSQL 的資料庫 取出資料 render 到畫面上
 ![image](https://github.com/nickyoung3300/pos/assets/95325064/8fefe903-c743-48a7-bbf7-a4fd33ceff52)
 使用者先點選 商品 明細欄會顯現出 商品明細
 ![image](https://github.com/nickyoung3300/pos/assets/95325064/d84d2f27-aefa-4d83-b26c-65bd0283dabf)
