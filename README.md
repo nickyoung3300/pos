@@ -1,5 +1,8 @@
 <h1>pos</h1>
 
+![POS1](https://github.com/nickyoung3300/pos/assets/95325064/0342d589-67de-417a-b782-e2992e6448e8)
+
+
 ![POS](https://github.com/nickyoung3300/pos/assets/95325064/01b78007-2232-463b-9ac0-5c9782ace895)
 
 ![POS](https://github.com/nickyoung3300/pos/assets/95325064/0ba71d45-9985-4eb4-98a1-c8093cecd127)
