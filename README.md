@@ -31,3 +31,6 @@
 
 
 ![3](https://github.com/nickyoung3300/pos/assets/95325064/25b2f089-0ccb-459a-9394-5716b24e8be1)
+
+MTV 架構
+![3](https://github.com/nickyoung3300/pos/assets/95325064/71e32fd7-34b3-4dfb-b5df-d07f7e4c1c84)
