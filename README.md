@@ -1,8 +1,8 @@
 <h1>pos</h1>
 
+![POS](https://github.com/nickyoung3300/pos/assets/95325064/01b78007-2232-463b-9ac0-5c9782ace895)
 
 
-![3](https://github.com/nickyoung3300/pos/assets/95325064/25b2f089-0ccb-459a-9394-5716b24e8be1)
 
 <h3>使用者進入POS系統畫面 商品選單 的商品 </h3>
 <h3>會透過 Django 中 Model </h3>
@@ -28,3 +28,6 @@
 使用者鍵入 DashBoard 會從 PostgreSQL 中抓取 並匯集 業績進展
 
 ![image](https://github.com/nickyoung3300/pos/assets/95325064/afb5cfc5-b6ac-4b90-b863-c877deb4541f)
+
+
+![3](https://github.com/nickyoung3300/pos/assets/95325064/25b2f089-0ccb-459a-9394-5716b24e8be1)
