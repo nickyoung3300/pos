@@ -24,3 +24,7 @@
 
 ![image](https://github.com/nickyoung3300/pos/assets/95325064/a0aa7b22-5c36-42f2-87d2-5b341e7b082e)
 
+
+使用者鍵入 DashBoard 會從 PostgreSQL 中抓取 並匯集 業績進展
+
+![image](https://github.com/nickyoung3300/pos/assets/95325064/afb5cfc5-b6ac-4b90-b863-c877deb4541f)
