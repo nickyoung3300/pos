@@ -2,6 +2,17 @@
 
 ![POS](https://github.com/nickyoung3300/pos/assets/95325064/01b78007-2232-463b-9ac0-5c9782ace895)
 
+![POS](https://github.com/nickyoung3300/pos/assets/95325064/0ba71d45-9985-4eb4-98a1-c8093cecd127)
+
+
+
+
+
+
+
+
+
+
 
 
 <h3>使用者進入POS系統畫面 商品選單 的商品 </h3>
