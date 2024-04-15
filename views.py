@@ -70,11 +70,11 @@ def dashBoard(request):
 	seven_days_ago = today - timedelta(days=7)
 	revenue = []
 	
-	# 查詢美意天的訂單，按照日期分組(Group By) 計算 總和
+	# 查詢每日訂單，按照日期分組(Group By) 計算 總和
 	orders_summary = Order.objects.filter(created_at__date__gte=seven_days_ago).values('created_at__date').annotate(total_price_sum=Sum('total_price')).order_by('created_at__date')
 	for summary in orders_summary:
 		revenue
-		print("日期:", summary['created_at__date'], "总销售额:", summary['total_price_sum'])
+		print("日期:", summary['created_at__date'], "總銷售額:", summary['total_price_sum'])
 	
 	revenue = [
     {
