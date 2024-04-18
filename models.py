@@ -25,4 +25,21 @@ class Menu(models.Model):
     def __str__(self):
         return self.product
 
-    
+
+class Order(models.Model):
+    order_number = models.AutoField(primary_key=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    total_price = models.DecimalField(max_digits=10, decimal_places=2, default=0)  # 添加 total_price 字段来保存订单的总金额
+    # 其他订单信息
+
+class OrderItem(models.Model):
+    order = models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)
+    suger = models.CharField(max_length=100)
+    temp = models.CharField(max_length=100)
+    quantity = models.IntegerField()
+    unit_price = models.IntegerField()
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+
+    def calculate_total_price(self):
+        return int(self.unit_price) * int(self.quantity)
