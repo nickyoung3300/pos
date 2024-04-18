@@ -1,0 +1,222 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+<h1>請選擇商品</h1>
+
+<div class="row">
+    {% for item in Menu %}
+
+
+
+    <div class="col-sm-3 mb-3 mb-sm-3" id="{{item.id}}"
+        onclick="addItem('{{item.product}}', '3', '35%冰', {{item.price}}, {{item.price}})">
+        <div class="card">
+            <div class="card-header"
+                style="background-color:{% if item.category_id == 1 %} #F588AA 
+        {% elif item.category_id == 2 %} #86C166 {% elif item.category_id == 3 %} #cba7d0 {% elif item.category_id == 4 %} #F9BF45 {% endif %}">
+                <span>{{ item.category.categoryname }}</span>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">{{item.product}}</h5>
+                <p class="card-text">$ {{item.price}}</p>
+
+
+            </div>
+        </div>
+    </div>
+
+
+    {% endfor %}
+
+</div>
+<!-- <div class="row">
+
+    <div class="col-sm-4 mb-4 mb-sm-4">
+        <button type="button" class="btn btn-warning">warning</button>
+    </div>
+    <div class="col-sm-4 mb-4 mb-sm-4">
+        <button type="button" class="btn btn-warning">warning</button>
+    </div>
+    <div class="col-sm-4 mb-4 mb-sm-4">
+        <button type="button" class="btn btn-warning" style="width: 120px;;">warning</button>
+    </div>
+
+</div> -->
+<script>
+    const package = []
+    {% for item in Menu %}
+
+    var newObj = { 品名: '{{item.product}}', 金額: '{{item.price}}', 甜度: 1, 溫度: '35%冰' };
+    package.push(newObj);
+
+    {% endfor %}
+    for (let i = 0; i < package.length; i++) {
+
+        console.log(package[i]);
+    }
+
+
+
+    class Product {
+        constructor(name, price) {
+            this.name = name;
+            this.price = price;
+            this.suger = 1; //1 3 5 8
+            this.temp = '35%冰'; // 35%冰 常溫 熱 
+        }
+
+
+    }
+
+    // 定義一個陣列來儲存訂單資料
+    const orderItems = [];
+
+    // 新增訂單項目
+    function addItem(name, suger, temp, unip, price) {
+        // 檢查該項目是否已存在於訂單中
+        // const existingItem = orderItems.find(item => item.name === name && item.suger === suger && item.temp === temp);
+
+        // // 如果已存在，則更新數量和金額
+        // if (existingItem) {
+        //     existingItem.quantity++;
+        //     existingItem.price = existingItem.quantity * price;
+        // } else {
+        // 如果不存在，則新增一個新的項目
+        orderItems.push({
+            index: '',
+            name,
+            suger,
+            temp,
+            quantity: 1,
+            unip,
+            price,
+        });
+        // }
+        console.log(orderItems)
+        // 更新訂單明細
+        updateOrderTable();
+
+        // 更新總金額
+        updateTotalPrice();
+    }
+
+    // 更新訂單明細
+    function updateOrderTable() {
+        const orderTable = document.getElementById('orderTable');
+        const tbody = orderTable.getElementsByTagName('tbody')[0];
+
+        // 清除現有資料
+        tbody.innerHTML = '';
+
+        // 新增新的資料
+        const r = document.createElement('tr');
+        const index = document.createElement('td');
+        const dName = document.createElement('td');
+        const suger = document.createElement('td');
+        const temt = document.createElement('td');
+        const dQuantity = document.createElement('td');
+        const tunip = document.createElement('td');
+        const dPrice = document.createElement('td');
+
+        index.textContent = "序";
+        dName.textContent = "品名";
+        suger.textContent = "甜度";
+        temt.textContent = "溫度";
+        dQuantity.textContent = "數量";
+        tunip.textContent = "價格";
+        dPrice.textContent = "金額";
+
+        r.appendChild(index);
+        r.appendChild(dName);
+        r.appendChild(suger);
+        r.appendChild(temt);
+        r.appendChild(dQuantity);
+        r.appendChild(tunip);
+        r.appendChild(dPrice);
+        var countitem = 0
+        tbody.appendChild(r);
+
+        if(orderItems.length>0){
+
+            for (const [index, item] of orderItems.entries()) {
+                orderItems[index].index = index + 1;
+                const tr = document.createElement('tr');
+                const tindex = document.createElement('td');
+                const tdName = document.createElement('td');
+                const tsuger = document.createElement('td');
+                const ttemt = document.createElement('td');
+                const tdQuantity = document.createElement('td');
+                const unip = document.createElement('td');
+                const tdPrice = document.createElement('td');
+    
+                tindex.textContent = countitem + 1;
+                tdName.textContent = item.name;
+                tsuger.textContent = item.suger;
+                ttemt.textContent = item.temp;
+                tdQuantity.textContent = item.quantity;
+                unip.textContent = item.unip;
+                orderItems[index].price = item.unip * item.quantity;
+                tdPrice.textContent = item.price;
+    
+                tr.appendChild(tindex);
+                tr.appendChild(tdName);
+                tr.appendChild(tsuger);
+                tr.appendChild(ttemt);
+                tr.appendChild(tdQuantity);
+                tr.appendChild(unip);
+                tr.appendChild(tdPrice);
+    
+                // tr.setAttribute("onclick", `alert('You clicked the ${index}!')`);
+                tr.setAttribute("onclick", `alterorder(orderItems,${orderItems[index].index})`);
+                tr.setAttribute("id", `${orderItems[index].index}`);
+                tbody.appendChild(tr);
+                countitem++;
+            }
+        }
+    }
+
+    // 更新總金額
+    function updateTotalPrice() {
+        const totalPrice = document.getElementById('totalPrice');
+        let total = 0;
+        if(orderItems.length>0){
+
+            for (const item of orderItems) {
+                total += item.price;
+            }
+    
+            totalPrice.textContent = total;
+
+        }
+        totalPrice.textContent = total;
+    }
+
+
+    
+
+    function alterorder(orderItems,index) {
+
+        const link = document.getElementById('Change')
+        console.log(orderItems)
+        const cell = document.getElementById(index)
+        const id = cell.getAttribute('id');
+        
+        document.getElementById('showid').innerText = id
+        console.log(id)
+        link.click();
+
+    }
+    // button.addEventListener('click', function (event) {
+    //     if (event.target.tagName === 'TD') {
+    //         alert('You clicked a cell in row 1!');
+    //     }
+    // });
+
+</script>
+
+
+
+
+
+{% endblock %}

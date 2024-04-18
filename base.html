@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POS</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+
+
+    <style>
+        .function {
+            background-color: rgb(255, 217, 127);
+        }
+
+        .operation {
+            background-color: rgb(176, 213, 223);
+        }
+
+        .cal {
+            background-color: bisque;
+        }
+
+        body {
+            font-family: Arial;
+        }
+
+        /* Style the tab */
+        .tab {
+            overflow: hidden;
+            border: 1px solid #ccc;
+            background-color: #f1f1f1;
+        }
+
+        /* Style the buttons inside the tab */
+        .tab button {
+            background-color: inherit;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+            font-size: 17px;
+        }
+
+        /* Change background color of buttons on hover */
+        .tab button:hover {
+            background-color: #ddd;
+        }
+
+        /* Create an active/current tablink class */
+        .tab button.active {
+            background-color: #ccc;
+        }
+
+        /* Style the tab content */
+        .tabcontent {
+            display: none;
+            padding: 6px 12px;
+            border: 1px solid #ccc;
+            border-top: none;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="container-fluid">
+        <h1>POS 系統</h1>
+    </header>
+    <div class="container-fluid" style="height: 100%">
+        <div class="row">
+            <div class="col-sm-2 function">
+                <ul class="list-unstyled" style="font-size: 1.8rem; margin-top: 60px;">
+
+                    <li><a href="http://127.0.0.1:8000/">首頁</a></li>
+                    <li><a href="http://127.0.0.1:8000/pos1/dashBoard/">Dashboard</a></li>
+                    <li><a href="#">商品更新</a></li>
+                </ul>
+            </div>
+            <div class="col-sm-6 operation">
+                {% block content %}
+
+                {% endblock content %}
+
+            </div>
+            <div class="col-sm-4 cal">
+                <table class="table table-bordered table-sm" style="margin-top: 10px ;" id="orderTable">
+                    <tr>
+                        <th>序</th>
+                        <th>品名</th>
+                        <th>甜度</th>
+                        <th>溫度</th>
+                        <th>數量</th>
+                        <th>單價</th>
+                        <th>金額</th>
+                    </tr>
+                </table>
+
+
+
+            </div>
+        </div>
+    </div>
+    <div class="modal " id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
+        tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalToggleLabel">訂單更改 : <span id="showid"></span></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <!-- <div class="modal-body">
+                    請選擇更改細目
+                </div> -->
+                <div class="tab" style="display: flex;">
+                    <button class="tablinks" style="flex:1;" onclick="openCity(event, 'sweetness')" id="defaultOpen">甜
+                        度</button>
+                    <button class="tablinks" style="flex:1;" onclick="openCity(event, 'tempt')">溫 度</button>
+                    <button class="tablinks" style="flex:1;" onclick="openCity(event, 'quantity')">數 量</button>
+                    <button class="tablinks" style="flex:1; background-color:rgb(250, 236, 175);"
+                        onclick="openCity(event, 'x')">刪 改</button>
+                </div>
+
+                <div id="sweetness" class="tabcontent" style="display: flex;">
+                    <h3>選 擇 甜 度</h3>
+
+                    <input class="form-check-input" type="radio" name="sweetness" id="exampleRadios1" value="0">
+                    <label class="form-check-label" for="exampleRadios1"
+                        style="font-size: larger; flex:1; margin-right: 30px">
+                        無糖
+                    </label>
+
+
+                    <input class="form-check-input" type="radio" name="sweetness" id="exampleRadios2" value="3">
+                    <label class="form-check-label" for="exampleRadios2"
+                        style="font-size: larger; flex:1; margin-right: 30px">
+                        3分糖
+                    </label>
+
+
+                    <input class="form-check-input" type="radio" name="sweetness" id="exampleRadios3" value="5">
+                    <label class="form-check-label" for="exampleRadios3"
+                        style="font-size: larger; flex:1; margin-right: 30px">
+                        5分糖
+                    </label>
+
+
+                    <input class="form-check-input" type="radio" name="sweetness" id="exampleRadios4" value="8">
+                    <label class="form-check-label" for="exampleRadios4"
+                        style="font-size: larger; flex:1; margin-right: 30px">
+                        8分糖
+                    </label>
+
+                </div>
+
+                <div id="tempt" class="tabcontent" style="display: flex;">
+                    <h3>選 擇 溫 度</h3>
+                    <input class="form-check-input" type="radio" name="tempt" id="tempt1" value="35%冰">
+                    <label class="form-check-label" for="tempt1" style="font-size: larger; flex:1; margin-right: 30px">
+                        35%冰
+                    </label>
+
+
+                    <input class="form-check-input" type="radio" name="tempt" id="tempt2" value="去冰">
+                    <label class="form-check-label" for="tempt2" style="font-size: larger; flex:1; margin-right: 30px;">
+                        去冰
+                    </label>
+
+
+                    <input class="form-check-input" type="radio" name="tempt" id="tempt3" value="熱飲">
+                    <label class="form-check-label" for="tempt3" style="font-size: larger; flex:1; margin-right: 30px">
+                        熱飲
+                    </label>
+
+
+
+                </div>
+
+                <div id="quantity" class="tabcontent">
+                    <h3>鍵 入 數 量</h3>
+                    <input type="text" id="quantityinput">
+                </div>
+                <div id="x" class="tabcontent">
+                    <h3>確 定 刪 除</h3>
+                    <button class="btn btn-warning" data-bs-toggle="modal" id="deleteitem" style="width: 180px ;">刪 除 執
+                        行</button>
+                </div>
+
+                <script>
+                    function openCity(evt, cityName) {
+                        var i, tabcontent, tablinks;
+                        tabcontent = document.getElementsByClassName("tabcontent");
+                        for (i = 0; i < tabcontent.length; i++) {
+                            tabcontent[i].style.display = "none";
+                        }
+                        tablinks = document.getElementsByClassName("tablinks");
+                        for (i = 0; i < tablinks.length; i++) {
+                            tablinks[i].className = tablinks[i].className.replace(" active", "");
+                        }
+                        document.getElementById(cityName).style.display = "block";
+                        evt.currentTarget.className += " active";
+                    }
+
+                    // Get the element with id="defaultOpen" and click on it
+                    document.getElementById("defaultOpen").click();
+
+                </script>
+
+
+                <div class="modal-footer">
+                    <!-- <button class="btn btn-primary" data-bs-toggle="modal" onclick="clearAllInputs()" >Enter</button> -->
+                    <div class="btn btn-primary" data-bs-toggle="modal" id="clear-button" style="width: 180px ;">Enter
+                    </div>
+                </div>
+
+                <script>
+                    function clearAllInputs() {
+                        // const inputs = document.querySelectorAll('div input');
+                        // for (var i = 0; i<inputs.length; i++) {
+                        //     console.log(inputs[i].value );
+                        // }
+
+                        var getnowid = document.getElementById('showid').innerHTML
+                        // console.log(orderItems[getnowid - 1])
+
+                        originsweet = orderItems[getnowid - 1].suger
+                        origintemp = orderItems[getnowid - 1].temp
+                        originquantity = orderItems[getnowid - 1].quantity
+
+                        console.log(orderItems[getnowid - 1].quantity)
+
+                        sweetness = document.querySelector('input[name="sweetness"]:checked')?.value ?? originsweet
+                        tempt = document.querySelector('input[name="tempt"]:checked')?.value ?? origintemp
+                        quantity = document.getElementById('quantityinput').value == '' ? originquantity : document.getElementById('quantityinput').value
+                        console.log(quantity)
+                        // console.log(sweetness)
+                        // console.log(tempt)
+                        // console.log(quantity)
+                        orderItems[getnowid - 1].suger = sweetness
+                        orderItems[getnowid - 1].temp = tempt
+                        orderItems[getnowid - 1].quantity = quantity
+
+                        // originsweet = sweetness
+                        // origintemp = tempt
+                        // originquantity = quantity
+                        console.log(orderItems[getnowid - 1])
+
+
+                        updateOrderTable();
+
+                        // 更新總金額
+                        updateTotalPrice();
+                        const inputs = document.querySelectorAll('input[type="radio"]:checked');
+                        for (const input of inputs) {
+                            input.checked = false;
+                        }
+                        const inputexts = document.querySelectorAll('div input[type="text"]');
+                        for (const inputext of inputexts) {
+                            inputext.value = "";
+                        }
+
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: "top-end",
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.onmouseenter = Swal.stopTimer;
+                                toast.onmouseleave = Swal.resumeTimer;
+                            }
+                        });
+                        Toast.fire({
+                            icon: "success",
+                            title: "已完成更正"
+                        });
+
+                    }
+
+                    document.getElementById('clear-button').addEventListener('click', clearAllInputs);
+
+
+                    deleteitem = document.getElementById('deleteitem')
+
+                    deleteitem.onclick = function () {
+
+                        var getnowid = document.getElementById('showid').innerHTML
+                        const index = orderItems.findIndex(item => item.index == getnowid);
+
+                        orderItems.splice(index, 1);
+
+                        console.log(orderItems);
+
+                        updateOrderTable();
+
+                        // 更新總金額
+                        updateTotalPrice();
+
+
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: "top-end",
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.onmouseenter = Swal.stopTimer;
+                                toast.onmouseleave = Swal.resumeTimer;
+                            }
+                        });
+                        Toast.fire({
+                            icon: "success",
+                            title: "已完成更正"
+                        });
+                    }
+
+                </script>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="container-fluid" style="height: 100%">
+        <div class="row">
+            <div class="col-sm-2 function">
+                
+            </div>
+            <div class="col-sm-6 operation">
+
+
+            </div>
+            <div class="col-sm-4 cal">
+                <p style="font-size: 30px;">總金額：<span id="totalPrice" style="font-size: 30px;"></span></p>
+                <button type="button" class="btn btn-success" id="haschecked" style="width: 30%; font-size: 30px;"> 結 帳
+                </button>
+                <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+                <script>
+                    const csrfToken = document.querySelector('input[name="csrfmiddlewaretoken"]').value;
+                    function createOrder() {
+                        const formData = new FormData();
+                        for (const item of orderItems) {
+                            formData.append(`items-${item.index}`, JSON.stringify(item));
+                        }
+
+                        console.log(formData);
+                        var responseClone; // 1
+                        fetch('/pos1/', {
+                            method: 'POST',
+                            body: formData,
+                            headers: {
+                                'X-CSRFToken': csrfToken,
+
+                            },
+                        })
+                            .then(function (data) {
+                                // Do something with data
+                            }, function (rejectionReason) { // 3
+                                console.log('Error parsing JSON from response:', rejectionReason, responseClone); // 4
+                                responseClone.text() // 5
+                                    .then(function (bodyText) {
+                                        console.log('Received the following instead of valid JSON:', bodyText); // 6
+                                    });
+                            });
+                        orderItems.splice(0, orderItems.length);
+                        // 更新訂單明細
+                        updateOrderTable();
+
+                        // 更新總金額
+                        updateTotalPrice();
+
+                    }
+                    haschecked = document.getElementById('haschecked')
+                    haschecked.addEventListener("click", function () {
+
+                        checktotalPrice = document.getElementById('totalPrice').innerText
+                        Swal.fire({
+                            title: `總金額$ ${checktotalPrice}元`,
+                            showCancelButton: true,
+                            confirmButtonColor: "#3085d6",
+                            cancelButtonColor: "#d33",
+                            confirmButtonText: "確定結帳"
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                // alert('123') 確定結帳
+                                // console.log('123')
+                                createOrder()
+                            }
+                        });
+                    })
+                </script>
+            </div>
+        </div>
+    </div>
+    <a class="btn btn-primary" style="visibility: hidden;" data-bs-toggle="modal" href="#exampleModalToggle"
+        role="button" id="Change">Open first modal</a>
+    <footer class="container-fluid">
+        <p>&copy; 更新日期 3 月 31 日</p>
+
+    </footer>
+</body>
+
+</html>

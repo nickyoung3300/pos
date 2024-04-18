@@ -1,0 +1,81 @@
+{% extends "posdashboard.html" %}
+
+
+{% block content %}
+
+
+<div id="chart-container" style="margin: 0%;"></div>
+<script src="https://fastly.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+<script>
+
+
+    var dom = document.getElementById('chart-container');
+    var myChart = echarts.init(dom, 'dark', {
+        renderer: 'canvas',
+        useDirtyRect: false
+    });
+    var app = {};
+    dateData = [];
+    
+    {% for item in obj%}
+    dateData.push('{{item.date}}')
+                
+    {% endfor %}
+
+    revenuDate = [];
+
+    {% for item in obj%}
+    revenuDate.push('{{item.total_price_sum}}')
+                
+    {% endfor %}
+
+    var option;
+
+    option = {
+        title: {
+            text: 'Revenu'
+        },
+        tooltip: {
+            trigger: 'axis'
+        },
+        legend: {
+            data: ['Revenu']
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        toolbox: {
+            feature: {
+                saveAsImage: {}
+            }
+        },
+        xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            data: dateData
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: [
+            {
+                name: 'Revenu',
+                type: 'line',
+                stack: 'Total',
+                data: revenuDate
+            },
+
+        ]
+    };
+
+    if (option && typeof option === 'object') {
+        myChart.setOption(option);
+    }
+
+    window.addEventListener('resize', myChart.resize);
+</script>
+
+{% endblock %}
